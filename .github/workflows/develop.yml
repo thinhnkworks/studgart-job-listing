@@ -60,7 +60,7 @@ jobs:
       - name: Determine environment based on branches
         id: determine-environment
         run: |
-          if [[ ${{ github.ref }} == 'refs/heads/dev' ]]; then
+          if [[ ${{ github.ref }} == 'refs/heads/develop' ]]; then
             echo "env=dev" >> $GITHUB_OUTPUT
           elif [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
             echo "env=prod" >> $GITHUB_OUTPUT

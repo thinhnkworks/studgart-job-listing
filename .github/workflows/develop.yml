@@ -1,0 +1,31 @@
+name: "Develop"
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.0.0
+        with:
+          versionSpec: '6.x'
+      
+      - name: Tag commit major.minor.patch
+        run: |
+          git tag -a $(gitversion /showvariable MajorMinorPatch) -m "${{ github.event.head_commit.message }}"
+          git push origin $(gitversion /showvariable MajorMinorPatch)
+        
+      

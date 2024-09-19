@@ -1,13 +1,8 @@
 name: "Show GitVersion"
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - release/*
-      - hotfix/*
-  
+  workflow_dispatch:
+
 jobs:
   show-gitversion:
     runs-on: ubuntu-latest

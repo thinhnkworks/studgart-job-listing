@@ -48,5 +48,3 @@ export default tseslint.config({
   },
 })
 ```
-
-Thinh added this line to test CI/CD

@@ -82,7 +82,7 @@ jobs:
     if: ${{ needs.determine-actions.outputs.frontend == 'true' }}
     uses: ./.github/workflows/rw-build-deploy.yml
     with:
-      working-dir: ${{ github.workspace }}/frontend
+      working-dir: frontend
 
   backend:
     permissions:
@@ -92,4 +92,4 @@ jobs:
     if: ${{ needs.determine-actions.outputs.backend == 'true' }}
     uses: ./.github/workflows/rw-build-deploy.yml
     with:
-      working-dir: ${{ github.workspace }}/backend
+      working-dir: backend

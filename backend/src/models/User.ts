@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 export interface IUser extends Document {
   username: string;
   passwordHash: string;
@@ -45,6 +45,8 @@ userSchema.pre("save", function (next) {
   this.updatedAt = new Date();
   next();
 });
+
+userSchema.plugin(mongoosePaginate);
 
 const User = mongoose.model<IUser>("User", userSchema);
 

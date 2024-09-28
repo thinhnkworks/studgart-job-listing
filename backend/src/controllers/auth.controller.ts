@@ -63,11 +63,55 @@ export const register = async (
 
     const verificationLink = `${process.env.FRONTEND_URL}/auth/verify/${verificationToken}`;
 
-    await sendEmail(
-      email,
-      "Verify Your Email",
-      `Click the link to verify your email: ${verificationLink}`
-    );
+    const emailContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify Your Email</title>
+        <style>
+          body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: Arial, sans-serif; }
+          .email-container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+          .header { background-color: #4a90e2; padding: 20px; text-align: center; color: #ffffff; }
+          .header img { max-width: 100px; margin-bottom: 10px; }
+          .header h1 { margin: 0; font-size: 24px; }
+          .content { padding: 20px; text-align: left; }
+          .content h2 { color: #4a90e2; font-size: 20px; margin-top: 0; }
+          .content p { line-height: 1.6; margin: 10px 0; }
+          .button { display: inline-block; margin: 20px 0; padding: 12px 20px; background-color: #4a90e2; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px; }
+          .button:hover { background-color: #357abd; }
+          .footer { background-color: #f4f4f7; padding: 20px; text-align: center; font-size: 12px; color: #888; }
+          .footer a { color: #4a90e2; text-decoration: none; }
+        </style>
+      </head>
+      <body>
+        <div class="email-container">
+          <div class="header">
+            <img src="https://yourcompanylogo.com/logo.png" alt="Company Logo">
+            <h1>Welcome to [Your Company]</h1>
+          </div>
+          <div class="content">
+            <h2>Verify Your Email Address</h2>
+            <p>Hi there,</p>
+            <p>Thank you for registering with us! To complete your registration, please verify your email address by clicking the button below:</p>
+            <a href="${verificationLink}" class="button">Verify Email</a>
+            <p>If the button above doesn't work, copy and paste the following link into your browser:</p>
+            <p><a href="${verificationLink}">${verificationLink}</a></p>
+            <p>If you did not create an account, please ignore this email.</p>
+            <p>Thanks,<br>The [Your Company] Team</p>
+          </div>
+          <div class="footer">
+            <p>&copy; 2024 [Your Company]. All rights reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    await sendEmail(email, "Verify Your Email", emailContent);
 
     res.status(201).json({
       error: null,
@@ -99,11 +143,57 @@ export const resendVerificationEmail = async (
     const verificationToken = generateVerificationToken(user._id as string);
     const verificationLink = `${process.env.FRONTEND_URL}/auth/verify/${verificationToken}`;
 
-    await sendEmail(
-      email,
-      "Verify Your Email",
-      `Click the link to verify your email: ${verificationLink}`
-    );
+    const emailContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Verify Your Email</title>
+      <style>
+        body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: Arial, sans-serif; }
+        .email-container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .header { background-color: #4a90e2; padding: 20px; text-align: center; color: #ffffff; }
+        .header img { max-width: 100px; margin-bottom: 10px; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .content { padding: 20px; text-align: left; }
+        .content h2 { color: #4a90e2; font-size: 20px; margin-top: 0; }
+        .content p { line-height: 1.6; margin: 10px 0; }
+        .button { display: inline-block; margin: 20px 0; padding: 12px 20px; background-color: #4a90e2; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px; }
+        .button:hover { background-color: #357abd; }
+        .footer { background-color: #f4f4f7; padding: 20px; text-align: center; font-size: 12px; color: #888; }
+        .footer a { color: #4a90e2; text-decoration: none; }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+        <div class="header">
+          <img src="https://yourcompanylogo.com/logo.png" alt="Company Logo">
+          <h1>Welcome to [Your Company]</h1>
+        </div>
+        <div class="content">
+          <h2>Verify Your Email Address</h2>
+          <p>Hi there,</p>
+          <p>Thank you for registering with us! To complete your registration, please verify your email address by clicking the button below:</p>
+          <a href="${verificationLink}" class="button">Verify Email</a>
+          <p>If the button above doesn't work, copy and paste the following link into your browser:</p>
+          <p><a href="${verificationLink}">${verificationLink}</a></p>
+          <p>If you did not create an account, please ignore this email.</p>
+          <p>Thanks,<br>The [Your Company] Team</p>
+        </div>
+        <div class="footer">
+          <p>&copy; 2024 [Your Company]. All rights reserved.</p>
+          <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+    await sendEmail(email, "Verify Your Email", emailContent);
+
+    await sendEmail(email, "Verify Your Email", emailContent);
 
     res.status(200).json({ error: null, data: "Verification email resent." });
   } catch (error: any) {

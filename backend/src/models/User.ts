@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 export interface IUser extends Document {
-  username: string;
+  username?: string;
   passwordHash: string;
   email: string;
   phone?: string;
@@ -19,7 +19,7 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema<IUser>({
-  username: { type: String },
+  username: { type: String, default: "" },
   passwordHash: { type: String, required: true },
   email: { type: String, required: true, unique: true, index: true },
   phone: { type: String },
@@ -45,6 +45,8 @@ userSchema.pre("save", function (next) {
   this.updatedAt = new Date();
   next();
 });
+
+userSchema.plugin(mongoosePaginate);
 
 const User = mongoose.model<IUser>("User", userSchema);
 

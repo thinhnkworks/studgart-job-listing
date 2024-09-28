@@ -44,13 +44,139 @@ const router = Router();
  *               password:
  *                 type: string
  *                 example: password123
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               fullName:
+ *                 type: string
+ *                 example: John Doe
+ *               phone:
+ *                 type: string
+ *                 example: "+1234567890"
+ *               address:
+ *                 type: string
+ *                 example: "123 Main St, City, Country"
+ *               role:
+ *                 type: string
+ *                 example: "job_seeker"
+ *               profilePicture:
+ *                 type: string
+ *                 example: "https://example.com/profile.jpg"
+ *               bio:
+ *                 type: string
+ *                 example: "A passionate developer."
  *     responses:
  *       201:
- *         description: User registered successfully
+ *         description: User registered successfully. Email verification required.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: null
+ *                   example: null
+ *                 data:
+ *                   type: string
+ *                   example: User registered. Please check your email for verification.
  *       400:
- *         description: Invalid input
+ *         description: Invalid input or email already in use.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Email already in use."
+ *                 data:
+ *                   type: null
+ *                   example: null
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ *                 data:
+ *                   type: null
+ *                   example: null
  */
 router.post("/register", registerValidation, register);
+/**
+ * @swagger
+ * /auth/resend-verification-email:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Resend verification email to the user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *     responses:
+ *       200:
+ *         description: Verification email resent successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: null
+ *                   example: null
+ *                 data:
+ *                   type: string
+ *                   example: Verification email resent.
+ *       400:
+ *         description: Email already verified.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Email is already verified.
+ *                 data:
+ *                   type: null
+ *                   example: null
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: User not found
+ *                 data:
+ *                   type: null
+ *                   example: null
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Internal server error
+ *                 data:
+ *                   type: null
+ *                   example: null
+ */
 router.post(
   "/resend-verification-email",
   [body("email").isEmail()],

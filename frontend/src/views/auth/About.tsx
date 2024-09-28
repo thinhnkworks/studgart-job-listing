@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setPage } from '../store/navigationSlice';
+import { setPage } from '../../store/navigationSlice';
 import { useNavigate } from 'react-router-dom';
 
 function About() {

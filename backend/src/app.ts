@@ -9,11 +9,14 @@ import setupSwagger from "./swagger";
 dotenv.config();
 
 // Connect to MongoDB
-
 const app = express();
 
 // Middleware
-
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+  credentials: true, // Allow credentials if needed
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

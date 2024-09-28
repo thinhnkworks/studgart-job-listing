@@ -17,8 +17,17 @@ export const register = async (
   req: Request,
   res: Response<ApiResponse<string>>
 ) => {
-  const { email, password, username, fullName, phone, address, role } =
-    req.body;
+  const {
+    email,
+    password,
+    username,
+    fullName,
+    phone,
+    address,
+    role,
+    profilePicture,
+    bio,
+  } = req.body;
   // Validate the request
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

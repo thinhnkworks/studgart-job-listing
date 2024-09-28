@@ -5,6 +5,7 @@ import { PaginateResult } from "mongoose";
 
 // Convert User Document to UserDTO
 const toUserDTO = (user: IUser): IUserDTO => ({
+  _id: user._id as string,
   username: user.username,
   email: user.email,
   phone: user.phone,

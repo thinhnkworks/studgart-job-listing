@@ -48,7 +48,7 @@ export default function MainLayout() {
       ></div>
 
       {/* Displays other views */}
-      <div className="ml-0 lg:ml-[250px] transition-all">
+      <div className="ml-0 lg:ml-[270px] transition-all">
         <Suspense>
           <Outlet />
         </Suspense>

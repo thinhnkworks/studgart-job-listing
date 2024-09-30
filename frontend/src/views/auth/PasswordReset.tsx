@@ -1,12 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEnvelope } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
+import { FaEnvelope, FaSpinner } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { passwordReset } from '../../lib/reducers/auth/PasswordReset'; // Import the passwordReset function
 
 const PasswordReset: React.FC = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  // Function to handle password reset using the imported function
+  const handlePasswordReset = async () => {
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await passwordReset(email);
+      toast.success("Reset link sent to your email!");
+    } catch (error) {
+      toast.error(error as string);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -46,9 +66,12 @@ const PasswordReset: React.FC = () => {
           </div>
         </div>
         <button
-          className="bg-[#007acc] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full"
+          className="bg-[#007acc] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full flex items-center justify-center"
+          onClick={handlePasswordReset}
+          disabled={loading}
         >
-          Send OTP
+          {loading && <FaSpinner className="mr-2 animate-spin" />}
+          {loading ? "Sending..." : "Send to Email"}
         </button>
       </div>
     </div>

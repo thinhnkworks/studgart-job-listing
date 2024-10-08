@@ -7,11 +7,17 @@ module.exports = {
     ],
     theme: {
         extend: {
+            overflow: {
+                'scroll': 'scroll',
+              },
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)',
             },
+            backgroundImage: {
+                'custom-gradient': 'linear-gradient(to right, #02AB4E, #3F3F46)',
+              },
             colors: {
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',

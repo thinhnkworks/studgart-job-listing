@@ -16,6 +16,7 @@
       "@components/*": ["./src/components/*"],
       "@lib/*": ["./src/lib/*"],
       "@views/*": ["./src/views/*"],
+      "@reducers/*": ["lib/redux/reducers/*"],
     }
   }
 }
